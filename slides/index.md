@@ -7,11 +7,12 @@
 ***
 
 # Lord of chaos
-##  Becoming a Chaos Engineer
+
+## Becoming a Chaos Engineer
 
 ***
 
-### What is Chaos Engineering?
+### What is Chaos Engineering
 
 > Chaos Engineering is the discipline of experimenting on a distributed system
 in order to build confidence in the system’s capability
@@ -21,7 +22,7 @@ to withstand turbulent conditions in production.
 
 ***
 
-#### Microservices gives us more:
+#### Microservices gives us more
 
 - Network communication
 - Moving parts
@@ -63,13 +64,15 @@ The Simian Army
 
 ***
 
-### NoOps == NoWorries??
+### NoOps == NoWorries
+
+?
 
 ***
 
 Our software systems are becoming more complex and more distributed. How do we have confidence in the resilience and redundancy of the systems we put in production? Chaos Engineering is the practice of introducing failures into your system in controlled experiments to learn how your system reacts. In this talk we will look into how to establish the steady state behavior of a system and how to start experimenting to discover if the system can handle spikes in traffic, failures and timeouts.
 
-*** 
+***
 
 <Show some examples of Netflix, Microsoft and Jet using Chaos Engineering>
 
