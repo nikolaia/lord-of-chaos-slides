@@ -67,6 +67,10 @@ The Simian Army
 
 ***
 
+Our software systems are becoming more complex and more distributed. How do we have confidence in the resilience and redundancy of the systems we put in production? Chaos Engineering is the practice of introducing failures into your system in controlled experiments to learn how your system reacts. In this talk we will look into how to establish the steady state behavior of a system and how to start experimenting to discover if the system can handle spikes in traffic, failures and timeouts.
+
+*** 
+
 <Show some examples of Netflix, Microsoft and Jet using Chaos Engineering>
 
 This means we have to be aware of the steady state of our distributed system. We need to be able to track metrics that can help us monitor changes in the system, and to after some time determine what the normal state of our system is. This should hopefully already be in place from day one in any distributed system, not for controlled experiments that we are going to do through Chaos Engineering, but to monitor real world failures.
