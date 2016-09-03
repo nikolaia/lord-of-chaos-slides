@@ -15,9 +15,6 @@
 ' everlasting .NET vs Java battle - polyglot programming and common tools and services are now de facto standard. Chaos Engineering is a
 ' powerfull tool for every developer doing DevOps and Continious Delivery. It's for engineers that take ownership of their solutions
 ' all the way into production and beyond. For those of you that caught the Wheel of Time reference in the title. Good for you!
-***
-
-### What is Chaos Engineering
 
 ***
 
