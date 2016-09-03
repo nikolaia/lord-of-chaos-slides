@@ -7,13 +7,17 @@
 ***
 
 # Lord of chaos
-##  Becoming a Chaos Engineer
+
+## Becoming a Chaos Engineer
 
 ' High everyone. My name is Nikolai Norman Andersen and I'm right now the .NET competency lead at BEKK. So you might be thinking
 ' what the F is this guy doing here, NDC was months ago - this is JAVAzone. Well, even if most of us still have to choose a side in the
 ' everlasting .NET vs Java battle - polyglot programming and common tools and services are now de facto standard. Chaos Engineering is a
 ' powerfull tool for every developer doing DevOps and Continious Delivery. It's for engineers that take ownership of their solutions
 ' all the way into production and beyond. For those of you that caught the Wheel of Time reference in the title. Good for you!
+***
+
+### What is Chaos Engineering
 
 ***
 
@@ -21,7 +25,7 @@
 
 ---
 
-#### Microservices gives us more:
+#### Microservices gives us more
 
 - Network communication
 - Moving parts
@@ -107,7 +111,13 @@ var response = (HttpWebResponse)req.GetResponse();
 
 ***
 
-### NoOps == NoWorries??
+### NoOps == NoWorries
+
+?
+
+***
+
+Our software systems are becoming more complex and more distributed. How do we have confidence in the resilience and redundancy of the systems we put in production? Chaos Engineering is the practice of introducing failures into your system in controlled experiments to learn how your system reacts. In this talk we will look into how to establish the steady state behavior of a system and how to start experimenting to discover if the system can handle spikes in traffic, failures and timeouts.
 
 ***
 
