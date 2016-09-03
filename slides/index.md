@@ -9,17 +9,17 @@
 # Lord of chaos
 ##  Becoming a Chaos Engineer
 
-***
-
-### What is Chaos Engineering?
-
-> Chaos Engineering is the discipline of experimenting on a distributed system
-in order to build confidence in the system’s capability
-to withstand turbulent conditions in production.
-
-<!-- And why is this so important now? -->
+' High everyone. My name is Nikolai Norman Andersen and I'm right now the .NET competency lead at BEKK. So you might be thinking
+' what the F is this guy doing here, NDC was months ago - this is JAVAzone. Well, even if most of us still have to choose a side in the
+' everlasting .NET vs Java battle - polyglot programming and common tools and services are now de facto standard. Chaos Engineering is a
+' powerfull tool for every developer doing DevOps and Continious Delivery. It's for engineers that take ownership of their solutions
+' all the way into production and beyond. For those of you that caught the Wheel of Time reference in the title. Good for you!
 
 ***
+
+<a href="https://radar.bekk.no/tech2016/arkitektur-og-plattform" data-preview-link>BEKK Radar</a>
+
+---
 
 #### Microservices gives us more:
 
@@ -31,13 +31,24 @@ to withstand turbulent conditions in production.
 
 <!-- Our software systems are becoming more complex and more distributed. Microservices has become a household word, and many greenfield projects starts with small services from scratch. While it gives a lot opportunities, especially when it comes to scaling, polyglot solutions and maintenance, it also gives us a new set of problems: More network communication and more moving parts. We have a lot more configuration and we need to gracefully handle failures. Most likely we need service discovery and we are probably using a circuit breaker or two. This is getting complicated, but we get it working. -->
 
-***
+---
 
 ### Even Google goes down!
 
 ![Google Compute Engine Incident](images/googlecomputeincident.png)
 
 <!-- So how can we solve it? Well, you should  -->
+
+
+***
+
+### What is Chaos Engineering?
+
+> Chaos Engineering is the discipline of experimenting on a distributed system
+in order to build confidence in the system’s capability
+to withstand turbulent conditions in production.
+
+<!-- And why is this so important now? Right now I'm supposed to be at my desk to make sure National Tests in Norway are going as expected -->
 
 ***
 
@@ -47,23 +58,77 @@ to withstand turbulent conditions in production.
 
 <!-- We use unit tests to make sure our logic is sound, integration tests to test how our modules and systems work together and smoke tests to test more realistic scenarios when our solution is deployed to a environment with similarities to production. However we all know there are bugs or situations that will only occur in production, either because of the data or because of the load. Chaos Testing is a response to all of this. By injecting failures in a controlled experiment we can see how our system handles them. And we do it the only place where it matters: In production! And before you jump out of your chair to yell “Testing in production!? That’s crazy!”, let me tell you a bit more about Chaos Testing in practice: Chaos Testing, or Chaos Engineering, is not about fucking yourself over. It’s about finding weaknesses before they manifest, and to automate the process so you can, at any time - and after any change - be certain that your infrastructure and system can handle failures. -->
 
+http://principlesofchaos.org/
+
+---
+
+1. Start by defining ‘steady state’ as some measurable output of a system that indicates normal behavior.
+1. Hypothesize that this steady state will continue in both the control group and the experimental group.
+1. Introduce variables that reflect real world events like servers that crash, hard drives that malfunction, network connections that are severed, etc.
+1. Try to disprove the hypothesis by looking for a difference in steady state between the control group
+
 ***
 
-### Netflix
+### Chaos Engineering in the wild
 
-The Simian Army
+---
+
+### Netflix - The Simian Army
+https://github.com/Netflix/SimianArmy <!-- Chaos Monkey -->
 
 <!-- is a suite of tools for keeping your cloud operating in top form. Chaos Monkey, the first member, is a resiliency tool that helps ensure that your applications can tolerate random instance failures -->
 
-***
+---
 
-### Azure Search
+### Microsoft - Azure Search
+https://azure.microsoft.com/nb-no/blog/inside-azure-search-chaos-engineering/
 
-??
+---
+
+### WazMonkey
+https://github.com/smarx/WazMonkey
+
+```
+...
+// choose one at random
+var instance = instances[new Random().Next(instances.Length)];
+
+// reboot it
+req = (HttpWebRequest)WebRequest.Create("{0}/roleinstances/{1}?comp={2}", ...);
+req.Method = "POST";
+req.ContentLength = 0;
+req.Headers["x-ms-version"] = "2012-03-01";
+req.ClientCertificates.Add(cert);
+
+// make sure the response was "accepted"
+var response = (HttpWebResponse)req.GetResponse();
+...
+```
 
 ***
 
 ### NoOps == NoWorries??
+
+***
+
+controlled burn - netflix qcon talk
+
+Experiment, we are triggering failures when we are prepared and ready to react
+
+***
+
+### ÆØÅ in Logstash
+
+***
+
+### Lineage-driven Fault Injection
+`Application -> Loggingframework -> Local RabbitMQ instance -> Federated downstream RabbitMQ instance -> Logstash -> ElasticSearch`
+
+`Application -> Loggingframework -> Local RabbitMQ instance -> Federated downstream RabbitMQ instance -> Logstash -> File -> Logstash -> ElasticSearch`
+
+' Paper - Moly - QCon
+' "What could go wrong?" vs "Exactly  why did a good thing happen?"
+' Delay vs Failure -> Impossible to seperate
 
 ***
 
@@ -90,3 +155,6 @@ With the public cloud, we have an even easier time doing Chaos Tests. All the bi
 — Jepsen tests
 
 <Demo showing results of Chaos Tests in a distributed system running in the public cloud. If there is a time, we run a small experiment live as well>
+
+https://www.infoq.com/news/2016/03/failure-testing-netflix
+https://www.infoq.com/presentations/failure-test-research-netflix
