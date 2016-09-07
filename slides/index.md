@@ -22,18 +22,8 @@
 
 ### <a href="https://radar.bekk.no/tech2016/arkitektur-og-plattform" data-preview-link>BEKK Radar</a>
 
----
-
-### Distribution and complexity
-
-' Network communication
-' Moving parts
-' Configuration
-' Possible failures
-' Concepts to understad, like Service discovery and Circuit breakers
-' Leader election, data replication
-
-<!-- Our software systems are becoming more complex and more distributed. Microservices has become a household word, and many greenfield projects starts with small services from scratch. While it gives a lot opportunities, especially when it comes to scaling, polyglot solutions and maintenance, it also gives us a new set of problems: More network communication and more moving parts. We have a lot more configuration and we need to gracefully handle failures. Most likely we need service discovery and we are probably using a circuit breaker or two. This is getting complicated, but we get it working. -->
+' Recommended because they solve a lot of of problems regarding scalability and 
+' Moving away from the old monolitich ways of doing things, because they don't work for the new non-functional demands our customers give us
 
 ---
 
@@ -51,14 +41,63 @@ Application
 |> Kibana
 ````
 
+' Network failure to elasticsearc?
+' Put back on the queue, retries!?
+' Why not straight to Elasticsearch?
+' Elasticsearch is not recommended as primary storage
+' Brain split!!!?
+' Kibana if it can even reach the cluster because of resharding
+' 99% CPU. Two minutes to answer. Failure or latency?
+
+---
+
+### Distributed systems are complex
+
+' Network communication / Netsplits
+' Delay vs Failure -> Impossible to seperate
+' Leader election, data replication
+' Moving parts
+' Configuration
+' Possible failures
+' Concepts to understad, like Service discovery and Circuit breakers
+' Trivial systems vs alarms etc -> Nuclear reactor -> Formal methods
+
+<!-- Our software systems are becoming more complex and more distributed. Microservices has become a household word, and many greenfield projects starts with small services from scratch. While it gives a lot opportunities, especially when it comes to scaling, polyglot solutions and maintenance, it also gives us a new set of problems: More network communication and more moving parts. We have a lot more configuration and we need to gracefully handle failures. Most likely we need service discovery and we are probably using a circuit breaker or two. This is getting complicated, but we get it working. -->
+
+---
+
+### DON'T ROLL YOUR OWN!
+
+' ZooKeeper / Seal of Approval
+
+---
+
+### Putting components together is hard
+
+' Both doing what they were ment to do, but fucking each other over 
+' ZooKeeper Kafka bug found by Kyle Kingsbury (Has been fixed)
+
+---
+
+![Kafka Bug](images/kafkabug.png)
+
+
+<small>
+https://aphyr.com/posts/293-call-me-maybe-kafka
+<br/>
+https://people.eecs.berkeley.edu/~palvaro/molly.pdf
+</small>
+
+' Both Zookeeper and primary/backup replication are individually correct software components
+' Message loss failure followed by node failure
+
 ---
 
 #### Even Google goes down!
 
 ![Google Compute Engine Incident](images/googlecomputeincident.png)
 
-<!-- So how can we solve it? Well, you should  -->
-
+' Salesforce: Three-and-half-hours of data has evaporated
 
 ***
 
@@ -119,15 +158,17 @@ http://principlesofchaos.org/
 
 ---
 
+### Predictable outcomes
+
 ```
-request
-|> Function
-|> fun res -> analyze res
+let yourApplication request =
+    Process request
+    |> response
 ```
 
-' Your system as a function -> Needs to be the case for automated testing
-' 
-
+' Your system as a function
+' Functional language easier to reason about code, same with modules
+' Why microservices is good, why stateless is good
 
 ---
 
@@ -137,13 +178,20 @@ request
 
 ### Lineage-driven Fault Injection
 
-' Paper - Molly - QCon
+[https://people.eecs.berkeley.edu/~palvaro/molly.pdf](https://people.eecs.berkeley.edu/~palvaro/molly.pdf)
+<br/>
+<br/>
+<small>
+Alvaro, Peter, Joshua Rosen, and Joseph M. Hellerstein. "Lineage-driven fault injection." Proceedings of the 2015 ACM SIGMOD International Conference on Management of Data. ACM, 2015.
+</small>
+' Paper - Molly - QCon together with Amazon
 ' data lineage -> directly connect system outcomes to the data and messages that led to them
-' "the adversary agrees to crash no more than one node, and to drop messages only up until some fixed time"
-' "What could go wrong?" vs "Exactly  why did a good thing happen?"
-' Delay vs Failure -> Impossible to seperate
+' "Why did a good thing happend" - "What could have gone wrong along the way?"
+' Works it way backwards and finds proofs to why it happens, tries to disprove
+' The Rules: "the adversary agrees to crash no more than one node, and to drop messages only up until some fixed time"
 ' A lineagedriven fault injector reasons backwards from correct system outcomes to determine whether failures in the execution could have prevented the outcome.
 ' Formal methods
+' Random shots in the dark fault injection
 
 ***
 
@@ -156,7 +204,7 @@ https://github.com/Netflix/SimianArmy <!-- Chaos Monkey -->
 
 <!-- is a suite of tools for keeping your cloud operating in top form. Chaos Monkey, the first member, is a resiliency tool that helps ensure that your applications can tolerate random instance failures -->
 
-' Chaos Monkey
+' Chaos Monkey -> Daytime
 ' Janitor Monkey
 ' Conformity Monkey
 
@@ -169,6 +217,14 @@ https://azure.microsoft.com/nb-no/blog/inside-azure-search-chaos-engineering/
 
 ### WazMonkey
 https://github.com/smarx/WazMonkey
+
+---
+
+### Jepsen
+
+https://aphyr.com/tags/jepsen
+
+' Kyle Kingsbury's Jepsen is in my head Chaos Testing
 
 ```
 ...
@@ -185,6 +241,10 @@ req.ClientCertificates.Add(cert);
 // make sure the response was "accepted"
 var response = (HttpWebResponse)req.GetResponse();
 ```
+
+***
+
+### Summary
 
 ***
 
