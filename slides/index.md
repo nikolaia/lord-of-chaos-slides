@@ -103,6 +103,12 @@ https://people.eecs.berkeley.edu/~palvaro/molly.pdf
 
 ### What is Chaos Engineering
 
+' Different kinds of tests
+' Smoke tests are black boxes, what went wrong?
+' Experiments
+
+---
+
 > Chaos Engineering is the discipline of experimenting on a distributed system
 in order to build confidence in the system’s capability
 to withstand turbulent conditions in production.
@@ -110,7 +116,10 @@ to withstand turbulent conditions in production.
 <!-- And why is this so important now? Right now I'm supposed to be at my desk to make sure National Tests in Norway are going as expected -->
 
 ' controlled burn - netflix qcon talk
-' Experiment, we are triggering failures when we are prepared and ready to react
+' We are triggering failures when we are prepared and ready to react
+' collecting data
+' take node down, run smoketest, six seconds longer. Test pass but is it ok?
+' Steady state! What is that?
 
 ***
 
@@ -145,34 +154,11 @@ http://principlesofchaos.org/
 1. Run Experiments in Production
 1. Automate Experiments to Run Continuously
 
-' Focus on the measurable output of a system, rather than internal attributes of the system.  Measurements of that output over a short period of time constitute a proxy for the system’s steady state.  The overall system’s throughput, error rates, latency percentiles, etc. could all be metrics of interest representing steady state behavior.  By focusing on systemic behavior patterns during experiments, Chaos verifies that the system does work, rather than trying to validate how it works.
-' Chaos variables reflect real-world events.  Prioritize events either by potential impact or estimated frequency.  Consider events that correspond to hardware failures like servers dying, software failures like malformed responses, and non-failure events like a spike in traffic or a scaling event. Any event capable of disrupting steady state is a potential variable in a Chaos experiment.
-' Systems behave differently depending on environment and traffic patterns.  Since the behavior of utilization can change at any time, sampling real traffic is the only way to reliably capture the request path.  To guarantee both authenticity of the way in which the system is exercised and relevance ' to the current deployed system, Chaos strongly prefers to experiment directly on production traffic.
-' Running experiments manually is labor-intensive and ultimately unsustainable.  Automate experiments and run them continuously.  Chaos Engineering builds automation into the system to drive both orchestration and analysis.
-
-***
-
-### How to start
-
-' Remote desktop / SSH into a machine and stop a service
-
----
-
-### Predictable outcomes
-
-```
-let yourApplication request =
-    Process request
-    |> response
-```
-
-' Your system as a function
-' Functional language easier to reason about code, same with modules
-' Why microservices is good, why stateless is good
-
----
-
-![Two failure scenarios](images/failures.png)
+' * Focus on the measurable output of a system over time. Throughput, error rates, latency percentiles, etc. 
+' * hardware failures: servers dying, malformed responses. N
+' * Non-failure events like a spike in traffic or a scaling event
+' * Traffic patterns. Authenticity and relevance.
+' * Automate everything
 
 ***
 
@@ -218,16 +204,7 @@ https://azure.microsoft.com/nb-no/blog/inside-azure-search-chaos-engineering/
 ### WazMonkey
 https://github.com/smarx/WazMonkey
 
----
-
-### Jepsen
-
-https://aphyr.com/tags/jepsen
-
-' Kyle Kingsbury's Jepsen is in my head Chaos Testing
-
 ```
-...
 // choose one at random
 var instance = instances[new Random().Next(instances.Length)];
 
@@ -242,10 +219,41 @@ req.ClientCertificates.Add(cert);
 var response = (HttpWebResponse)req.GetResponse();
 ```
 
+---
+
+### Jepsen
+https://aphyr.com/tags/jepsen
+
 ***
 
-### Summary
+### How to start
+
+' Remote desktop / SSH into a machine and stop a service
+' Public cloud APIs -> Write a script
+' Monitoring to capture metrics
+
+---
+
+### Predictable outcomes
+
+```
+let yourApplication request =
+    Process request
+    |> response
+```
+
+' Your system as a pure function
+' Functional language easier to reason about code, same with modules
+' Why microservices is good, why stateless is good
+
+---
+
+### Selective test cases
+
+' "Why did a good thing happend"
+' Not even a formal system can test all cases? 
 
 ***
 
-### Thank you! :D
+# Let the Lord of Chaos Rule
+## Thank you!
