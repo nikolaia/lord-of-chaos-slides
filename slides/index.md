@@ -6,6 +6,8 @@
 
 ***
 
+<!-- Our software systems are becoming more complex and more distributed. How do we have confidence in the resilience and redundancy of the systems we put in production? Chaos Engineering is the practice of introducing failures into your system in controlled experiments to learn how your system reacts. In this talk we will look into how to establish the steady state behavior of a system and how to start experimenting to discover if the system can handle spikes in traffic, failures and timeouts. -->
+
 # Lord of chaos
 
 ## Becoming a Chaos Engineer
@@ -22,13 +24,14 @@
 
 ---
 
-#### More distribution, more complexity
+### Distribution and complexity
 
-- Network communication
-- Moving parts
-- Configuration
-- Possible failures
-- Concepts to understad <!-- Like Service discovery and Circuit breakers -->
+' Network communication
+' Moving parts
+' Configuration
+' Possible failures
+' Concepts to understad, like Service discovery and Circuit breakers
+' Leader election, data replication
 
 <!-- Our software systems are becoming more complex and more distributed. Microservices has become a household word, and many greenfield projects starts with small services from scratch. While it gives a lot opportunities, especially when it comes to scaling, polyglot solutions and maintenance, it also gives us a new set of problems: More network communication and more moving parts. We have a lot more configuration and we need to gracefully handle failures. Most likely we need service discovery and we are probably using a circuit breaker or two. This is getting complicated, but we get it working. -->
 
@@ -59,7 +62,7 @@ Application
 
 ***
 
-### What is Chaos Engineering?
+### What is Chaos Engineering
 
 > Chaos Engineering is the discipline of experimenting on a distributed system
 in order to build confidence in the system’s capability
@@ -110,6 +113,40 @@ http://principlesofchaos.org/
 
 ***
 
+### How to start
+
+' Remote desktop / SSH into a machine and stop a service
+
+---
+
+```
+request
+|> Function
+|> fun res -> analyze res
+```
+
+' Your system as a function -> Needs to be the case for automated testing
+' 
+
+
+---
+
+![Two failure scenarios](images/failures.png)
+
+***
+
+### Lineage-driven Fault Injection
+
+' Paper - Molly - QCon
+' data lineage -> directly connect system outcomes to the data and messages that led to them
+' "the adversary agrees to crash no more than one node, and to drop messages only up until some fixed time"
+' "What could go wrong?" vs "Exactly  why did a good thing happen?"
+' Delay vs Failure -> Impossible to seperate
+' A lineagedriven fault injector reasons backwards from correct system outcomes to determine whether failures in the execution could have prevented the outcome.
+' Formal methods
+
+***
+
 ### Chaos Engineering in the wild
 
 ---
@@ -118,6 +155,10 @@ http://principlesofchaos.org/
 https://github.com/Netflix/SimianArmy <!-- Chaos Monkey -->
 
 <!-- is a suite of tools for keeping your cloud operating in top form. Chaos Monkey, the first member, is a resiliency tool that helps ensure that your applications can tolerate random instance failures -->
+
+' Chaos Monkey
+' Janitor Monkey
+' Conformity Monkey
 
 ---
 
@@ -135,7 +176,7 @@ https://github.com/smarx/WazMonkey
 var instance = instances[new Random().Next(instances.Length)];
 
 // reboot it
-req = (HttpWebRequest)WebRequest.Create("{0}/roleinstances/{1}?comp={2}", ...);
+req = HttpWebRequest.Create("CloudProviderApi.com", ...);
 req.Method = "POST";
 req.ContentLength = 0;
 req.Headers["x-ms-version"] = "2012-03-01";
@@ -143,20 +184,7 @@ req.ClientCertificates.Add(cert);
 
 // make sure the response was "accepted"
 var response = (HttpWebResponse)req.GetResponse();
-...
 ```
-
-***
-
-### Lineage-driven Fault Injection
-
-' Paper - Moly - QCon
-' "What could go wrong?" vs "Exactly  why did a good thing happen?"
-' Delay vs Failure -> Impossible to seperate
-
----
-
-![Two failure scenarios](images/failures.png)
 
 ***
 
