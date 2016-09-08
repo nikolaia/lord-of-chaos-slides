@@ -12,18 +12,20 @@
 
 ## Becoming a Chaos Engineer
 
-' High everyone. My name is Nikolai Norman Andersen and I'm right now the .NET competency lead at BEKK. So you might be thinking
-' what the F is this guy doing here, NDC was months ago - this is JAVAzone. Well, even if most of us still have to choose a side in the
-' everlasting .NET vs Java battle - polyglot programming and common tools and services are now de facto standard. Chaos Engineering is a
-' powerfull tool for every developer doing DevOps and Continious Delivery. It's for engineers that take ownership of their solutions
-' all the way into production and beyond. For those of you that caught the Wheel of Time reference in the title. Good for you!
+' * High everyone
+' * My name is Nikolai Norman Andersen, .NET competency lead at BEKK
+' * NDC was months ago?
+' * Polyglot programming and common tools and services are now de facto standard.
+' * powerfull tool for every developer in a DevOps culture
+' * Wheel of Time reference
 
 ***
 
 ### <a href="https://radar.bekk.no/tech2016/arkitektur-og-plattform" data-preview-link>BEKK Radar</a>
 
-' Recommended because they solve a lot of of problems regarding scalability and 
-' Moving away from the old monolitich ways of doing things, because they don't work for the new non-functional demands our customers give us
+' * Recommended because they solve a lot of of problems regarding scalability and availability
+' * Moving away from the old monolitich ways of doing things, new non-functional demands our customers give us
+' * Solves a problem, but introduces more? 
 
 ---
 
@@ -223,6 +225,8 @@ var response = (HttpWebResponse)req.GetResponse();
 
 ### Jepsen
 https://aphyr.com/tags/jepsen
+
+' Kyle Kingsbury
 
 ***
 
