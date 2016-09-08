@@ -156,7 +156,7 @@ http://principlesofchaos.org/
 1. Run Experiments in Production
 1. Automate Experiments to Run Continuously
 
-' * Focus on the measurable output of a system over time. Throughput, error rates, latency percentiles, etc. 
+' * Measurable output over time. Throughput, error rates, latency percentiles 
 ' * hardware failures: servers dying, malformed responses. N
 ' * Non-failure events like a spike in traffic or a scaling event
 ' * Traffic patterns. Authenticity and relevance.
@@ -255,9 +255,13 @@ let yourApplication request =
 ### Selective test cases
 
 ' "Why did a good thing happend"
-' Not even a formal system can test all cases? 
+' Bottom up over top down
+' Not even a formal system can test all cases?
+' Mindset
 
 ***
 
 # Let the Lord of Chaos Rule
 ## Thank you!
+
+@nikolaiii
