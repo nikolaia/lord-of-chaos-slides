@@ -43,13 +43,14 @@ Application
 |> Kibana
 ````
 
-' Network failure to elasticsearc?
+' Network failure to elasticsearch?
 ' Put back on the queue, retries!?
-' Why not straight to Elasticsearch?
 ' Elasticsearch is not recommended as primary storage
 ' Brain split!!!?
-' Kibana if it can even reach the cluster because of resharding
+' Kibana request not responding resharding
 ' 99% CPU. Two minutes to answer. Failure or latency?
+' Why not straight to Elasticsearch? -> We experienced network failues
+' Less errors with this complex stack
 
 ---
 
@@ -100,6 +101,7 @@ https://people.eecs.berkeley.edu/~palvaro/molly.pdf
 ![Google Compute Engine Incident](images/googlecomputeincident.png)
 
 ' Salesforce: Three-and-half-hours of data has evaporated
+' Azure DNS: Unavailable instances
 
 ***
 
