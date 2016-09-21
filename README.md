@@ -1,31 +1,13 @@
-[![Issue Stats](http://issuestats.com/github/fsprojects/FsReveal/badge/issue)](http://issuestats.com/github/fsprojects/FsReveal)
-[![Issue Stats](http://issuestats.com/github/fsprojects/FsReveal/badge/pr)](http://issuestats.com/github/fsprojects/FsReveal)
+# Lord of Chaos - Becoming a Chaos Engineer
 
-# FsReveal [![NuGet Status](http://img.shields.io/nuget/v/FsReveal.svg?style=flat)](https://www.nuget.org/packages/FsReveal/)
+Presentation held at Javazone 2016
 
-FsReveal allows you to write beautiful slides in [Markdown](http://daringfireball.net/projects/markdown/syntax)
-and brings F# to the [reveal.js][revealjs] web presentation framework.
+## Abstract
 
-## Features
+Our software systems are becoming more complex and more distributed. How do we have confidence in the resilience and redundancy of the systems we put in production? Chaos Engineering is the practice of introducing failures into your system in controlled experiments to learn how your system reacts. In this talk we will look into how to establish the steady state behavior of a system and how to start experimenting to discover if the system can handle spikes in traffic, failures and timeouts.
 
-- Write your slides in [Markdown](http://daringfireball.net/projects/markdown/syntax) or .fsx files
-- Automatically updates the browser in edit mode on every save
-- Syntax highlighting for most programming languages including C#, F# and LaTeX
-- Speaker notes; Shows the current slide, next slide, elapsed time and current time
-- Built in themes
-- Horizontal and vertical slides
-- Built in slide transitions using CSS 3D transforms
-- Slide overview
-- Works on mobile browsers. Swipe your way through the presentation.
+## Links
 
-[Examples](http://fsprojects.github.io/FsReveal/index.html#Examples) and a [Getting started guide](http://fsprojects.github.io/FsReveal/getting-started.html) can be found in the docs.
+[Vimeo Link](https://vimeo.com/181925286)
 
-[revealjs]: https://github.com/hakimel/reveal.js/ "reveal.js | HTML presentations made easy"
-
-### Maintainer(s)
-
-- [@kimsk](https://github.com/kimsk)
-- [@forki](https://github.com/forki)
-- [@troykershaw](https://github.com/troykershaw)
-
-The default maintainer account for projects under "fsprojects" is [@fsprojectsgit](https://github.com/fsprojectsgit) - F# Community Project Incubation Space (repo management)
+[Link to slides on Github Pages](https://nikolaia.github.io/lord-of-chaos-slides/)
