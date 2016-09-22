@@ -138,10 +138,29 @@ ZooKeeper Kafka bug found by Kyle Kingsbury (Has been fixed)<br/>
 https://aphyr.com/posts/293-call-me-maybe-kafka
 <br/>
 https://people.eecs.berkeley.edu/~palvaro/molly.pdf
+<br/>
+http://blog.empathybox.com/post/62279088548/a-few-notes-on-kafka-and-jepsen
 </small>
 <aside class="notes">
-Both Zookeeper and primary/backup replication are individually correct software components<br/>
-Message loss failure followed by node failure<br/>
+* Partition<br/>
+* It claimed tolerance to F-1 failures, but a single node could cause catastrophe<br/>
+* Both Zookeeper and primary/backup replication are individually correct software components<br/>
+* writes are not replicated prior to acknowledgement<br/>
+* Message loss failure followed by node failure<br/>
+* candidate design<br/>
+</aside>
+</section>
+<section >
+<h3>CAP Theorem</h3>
+<ul>
+<li>Consistency</li>
+<li>Availability</li>
+<li>Partition Tolerance</li>
+</ul>
+<aside class="notes">
+* Consistency - A read is guaranteed to return the most recent write for a given client.<br/>
+* Availability - A non-failing node will return a reasonable response within a reasonable amount of time (no error or timeout).<br/>
+* Partition Tolerance - The system will continue to function when network partitions occur.<br/>
 </aside>
 </section>
 <section >
@@ -334,8 +353,9 @@ Mindset<br/>
 </section>
 <section >
 <h1>Let the Lord of Chaos Rule</h1>
-<h2>Thank you!</h2>
-<p>twitter: @nikolaiii</p>
+<h2>Questions?</h2>
+<p><br/>twitter: <a href="https://twitter.com/nikolaiii">@nikolaiii</a>
+<br/>slides: <a href="https://nikolaia.github.io/lord-of-chaos-slides/">https://nikolaia.github.io/lord-of-chaos-slides/</a></p>
 </section>
 
 
