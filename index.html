@@ -1,0 +1,378 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Lord of Chaos - Becoming a Chaos Engineer</title>
+    <meta name="description" content="Lord of Chaos - Becoming a Chaos Engineer">
+    <meta name="author" content="Nikolai Norman Andersen">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="//code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="//code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/night.css" id="theme">
+    <link type="text/css" rel="stylesheet" href="fsharp.formatting/styles/style.css" />
+    <link type="text/css" rel="stylesheet" href="fsharp.formatting/styles/deedle.css" />
+    <link type="text/css" rel="stylesheet" href="css/custom.css" />
+    <script src="fsharp.formatting/styles/tips.js" type="text/javascript"></script>
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+    <link rel="stylesheet" href="css/fsreveal.css">
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+    </script>
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+    <script language="javascript" type="text/javascript">
+        function init()
+        {
+            websocket = new WebSocket("ws://"+window.location.host+"/websocket");
+            websocket.onmessage = function(evt) { location.reload(); };
+        }
+        window.addEventListener("load", init, false);
+    </script>
+</head>
+<body>
+    <div class="reveal">
+        
+        <!-- Any section element inside of this container is displayed as a slide -->
+        <div class="slides">
+            <section >
+<!-- Our software systems are becoming more complex and more distributed. How do we have confidence in the resilience and redundancy of the systems we put in production? Chaos Engineering is the practice of introducing failures into your system in controlled experiments to learn how your system reacts. In this talk we will look into how to establish the steady state behavior of a system and how to start experimenting to discover if the system can handle spikes in traffic, failures and timeouts. -->
+<h1>Lord of chaos</h1>
+<h2>Becoming a Chaos Engineer</h2>
+<aside class="notes">
+* High everyone<br/>
+* My name is Nikolai Norman Andersen, .NET competency lead at BEKK<br/>
+* Polyglot programming and common tools and services are now de facto standard.<br/>
+* powerfull tool for every developer in a DevOps culture<br/>
+* Wheel of Time reference<br/>
+</aside>
+</section>
+<section >
+<section >
+<h3><a href="https://radar.bekk.no/tech2016/arkitektur-og-plattform" data-preview-link>BEKK Radar</a></h3>
+<aside class="notes">
+* Recommended because they solve a lot of of problems regarding scalability and availability<br/>
+* Moving away from the old monolitich ways of doing things, new non-functional demands our customers give us<br/>
+* Solves a problem, but introduces more?<br/>
+</aside>
+</section>
+<section >
+<h4>The simple act of logging</h4>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
+<span class="l">9: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Application</span>
+<span class="o">|&gt;</span> <span class="i">Loggingframework</span>
+<span class="o">|&gt;</span> <span class="i">Local</span> <span class="i">RabbitMQ</span> <span class="i">instance</span>
+<span class="o">|&gt;</span> <span class="i">Federated</span> <span class="i">downstream</span> <span class="i">RabbitMQ</span> <span class="i">instance</span>
+<span class="o">|&gt;</span> <span class="i">Logstash</span> <span class="i">Instance</span> <span class="i">One</span>
+<span class="o">|&gt;</span> <span class="i">File</span> ( <span class="o">|&gt;</span> <span class="i">Backup</span> <span class="i">on</span> <span class="i">fileshare</span> )
+<span class="o">|&gt;</span> <span class="i">Logstash</span> <span class="i">Instance</span> <span class="i">Two</span>
+<span class="o">|&gt;</span> <span class="i">ElasticSearch</span>
+<span class="o">|&gt;</span> <span class="i">Kibana</span>
+</code></pre></td>
+</tr>
+</table>
+<aside class="notes">
+Network failure to elasticsearch?<br/>
+Put back on the queue, retries!?<br/>
+Elasticsearch is not recommended as primary storage<br/>
+Brain split!!!?<br/>
+Kibana request not responding resharding<br/>
+99% CPU. Two minutes to answer. Failure or latency?<br/>
+Why not straight to Elasticsearch? -> We experienced network failues<br/>
+Less errors with this complex stack<br/>
+</aside>
+</section>
+<section >
+<h3>Distributed systems are complex</h3>
+<aside class="notes">
+Network communication / Netsplits<br/>
+Delay vs Failure -> Impossible to seperate<br/>
+Leader election, data replication<br/>
+Moving parts<br/>
+Configuration<br/>
+Possible failures<br/>
+Concepts to understad, like Service discovery and Circuit breakers<br/>
+Trivial systems vs alarms etc -> Nuclear reactor -> Formal methods<br/>
+</aside>
+<!-- Our software systems are becoming more complex and more distributed. Microservices has become a household word, and many greenfield projects starts with small services from scratch. While it gives a lot opportunities, especially when it comes to scaling, polyglot solutions and maintenance, it also gives us a new set of problems: More network communication and more moving parts. We have a lot more configuration and we need to gracefully handle failures. Most likely we need service discovery and we are probably using a circuit breaker or two. This is getting complicated, but we get it working. -->
+</section>
+<section >
+<h3>DON'T ROLL YOUR OWN!</h3>
+<aside class="notes">
+ZooKeeper / Seal of Approval<br/>
+</aside>
+</section>
+<section >
+<h3>Putting components together is hard</h3>
+<aside class="notes">
+Both doing what they were ment to do, but fucking each other over <br/>
+ZooKeeper Kafka bug found by Kyle Kingsbury (Has been fixed)<br/>
+</aside>
+</section>
+<section >
+<p><img src="images/kafkabug.png" alt="Kafka Bug" /></p>
+<small>
+https://aphyr.com/posts/293-call-me-maybe-kafka
+<br/>
+https://people.eecs.berkeley.edu/~palvaro/molly.pdf
+</small>
+<aside class="notes">
+Both Zookeeper and primary/backup replication are individually correct software components<br/>
+Message loss failure followed by node failure<br/>
+</aside>
+</section>
+<section >
+<h4>Even Google goes down!</h4>
+<p><img src="images/googlecomputeincident.png" alt="Google Compute Engine Incident" /></p>
+<aside class="notes">
+Salesforce: Three-and-half-hours of data has evaporated<br/>
+Azure DNS: Unavailable instances<br/>
+</aside>
+</section>
+</section>
+<section >
+<section >
+<h3>What is Chaos Engineering</h3>
+<aside class="notes">
+Different kinds of tests<br/>
+Smoke tests are black boxes, what went wrong?<br/>
+Experiments<br/>
+</aside>
+</section>
+<section >
+<blockquote>
+<p>Chaos Engineering is the discipline of experimenting on a distributed system
+in order to build confidence in the system’s capability
+to withstand turbulent conditions in production.</p>
+</blockquote>
+<!-- And why is this so important now? Right now I'm supposed to be at my desk to make sure National Tests in Norway are going as expected -->
+<aside class="notes">
+controlled burn - netflix qcon talk<br/>
+We are triggering failures when we are prepared and ready to react<br/>
+collecting data<br/>
+take node down, run smoketest, six seconds longer. Test pass but is it ok?<br/>
+Steady state! What is that?<br/>
+</aside>
+</section>
+</section>
+<section >
+<section >
+<!-- But how do we trust that all our failure handling will work as expected? How can we be sure that our autoscaling works? -->
+<h3>Embrace Chaos</h3>
+<!-- We use unit tests to make sure our logic is sound, integration tests to test how our modules and systems work together and smoke tests to test more realistic scenarios when our solution is deployed to a environment with similarities to production. However we all know there are bugs or situations that will only occur in production, either because of the data or because of the load. Chaos Testing is a response to all of this. By injecting failures in a controlled experiment we can see how our system handles them. And we do it the only place where it matters: In production! And before you jump out of your chair to yell “Testing in production!? That’s crazy!”, let me tell you a bit more about Chaos Testing in practice: Chaos Testing, or Chaos Engineering, is not about fucking yourself over. It’s about finding weaknesses before they manifest, and to automate the process so you can, at any time - and after any change - be certain that your infrastructure and system can handle failures. -->
+<p><a href="http://principlesofchaos.org/">http://principlesofchaos.org/</a></p>
+</section>
+<section >
+<h4>Principles</h4>
+<ol>
+<li>Define ‘steady state’</li>
+<li>Hypothesize that this state continues during failure</li>
+<li>Introduce failures</li>
+<li>Try to disprove hypothesis</li>
+</ol>
+<aside class="notes">
+1. Start by defining ‘steady state’ as some measurable output of a system that indicates normal behavior.<br/>
+1. Hypothesize that this steady state will continue in both the control group and the experimental group.<br/>
+1. Introduce variables that reflect real world events like servers that crash, hard drives that malfunction, network connections that are severed, etc.<br/>
+1. Try to disprove the hypothesis by looking for a difference in steady state between the control group<br/>
+</aside>
+</section>
+<section >
+<h4>Advanced Principles</h4>
+<ol>
+<li>Build a Hypothesis around Steady State Behavior</li>
+<li>Vary Real-world Events</li>
+<li>Run Experiments in Production</li>
+<li>Automate Experiments to Run Continuously</li>
+</ol>
+<aside class="notes">
+* Measurable output over time. Throughput, error rates, latency percentiles <br/>
+* hardware failures: servers dying, malformed responses. N<br/>
+* Non-failure events like a spike in traffic or a scaling event<br/>
+* Traffic patterns. Authenticity and relevance.<br/>
+* Automate everything<br/>
+</aside>
+</section>
+</section>
+<section >
+<h3>Lineage-driven Fault Injection</h3>
+<p><a href="https://people.eecs.berkeley.edu/~palvaro/molly.pdf">Lineage-driven Fault Injection Paper</a></p>
+<p><a href="https://www.infoq.com/presentations/failure-test-research-netflix">QCon 2016: Monkeys in Lab Coats: Applying Failure Testing Research @Netflix</a>
+<br/>
+<br/>
+<small></p>
+</small>
+<aside class="notes">
+* Paper - Molly - QCon together with Amazon<br/>
+* data lineage -> directly connect system outcomes to the data and messages that led to them<br/>
+* "Why did a good thing happend" - "What could have gone wrong along the way?"<br/>
+* Works it way backwards and finds proofs to why it happens, tries to disprove<br/>
+* The Rules: "the adversary agrees to crash no more than one node, and to drop messages only up until some fixed time"<br/>
+* A lineagedriven fault injector reasons backwards from correct system outcomes to determine whether failures in the execution could have prevented the outcome.<br/>
+* Formal methods<br/>
+* Random shots in the dark fault injection<br/>
+</aside>
+</section>
+<section >
+<section >
+<h3>Chaos Engineering in the wild</h3>
+</section>
+<section >
+<h3>Netflix - The Simian Army</h3>
+<p><a href="https://github.com/Netflix/SimianArmy">https://github.com/Netflix/SimianArmy</a> <!-- Chaos Monkey --></p>
+<!-- is a suite of tools for keeping your cloud operating in top form. Chaos Monkey, the first member, is a resiliency tool that helps ensure that your applications can tolerate random instance failures -->
+<aside class="notes">
+Chaos Monkey -> Daytime<br/>
+Janitor Monkey<br/>
+Conformity Monkey<br/>
+</aside>
+</section>
+<section >
+<h3>Microsoft - Azure Search</h3>
+<p><a href="https://azure.microsoft.com/nb-no/blog/inside-azure-search-chaos-engineering/">https://azure.microsoft.com/nb-no/blog/inside-azure-search-chaos-engineering/</a></p>
+</section>
+<section >
+<h3>WazMonkey</h3>
+<p><a href="https://github.com/smarx/WazMonkey">https://github.com/smarx/WazMonkey</a></p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// choose one at random</span>
+<span class="i">var</span> <span class="i">instance</span> <span class="o">=</span> <span class="i">instances</span>[<span class="k">new</span> <span class="i">Random</span>()<span class="o">.</span><span class="i">Next</span>(<span class="i">instances</span><span class="o">.</span><span class="i">Length</span>)];
+
+<span class="c">// reboot it</span>
+<span class="i">req</span> <span class="o">=</span> <span class="i">HttpWebRequest</span><span class="o">.</span><span class="i">Create</span>(<span class="s">&quot;CloudProviderApi.com&quot;</span>, <span class="o">..</span><span class="o">.</span>);
+<span class="i">req</span><span class="o">.</span><span class="i">Method</span> <span class="o">=</span> <span class="s">&quot;POST&quot;</span>;
+<span class="i">req</span><span class="o">.</span><span class="i">ContentLength</span> <span class="o">=</span> <span class="n">0</span>;
+<span class="i">req</span><span class="o">.</span><span class="i">Headers</span>[<span class="s">&quot;x-ms-version&quot;</span>] <span class="o">=</span> <span class="s">&quot;2012-03-01&quot;</span>;
+<span class="i">req</span><span class="o">.</span><span class="i">ClientCertificates</span><span class="o">.</span><span class="i">Add</span>(<span class="i">cert</span>);
+
+<span class="c">// make sure the response was &quot;accepted&quot;</span>
+<span class="i">var</span> <span class="i">response</span> <span class="o">=</span> (<span class="i">HttpWebResponse</span>)<span class="i">req</span><span class="o">.</span><span class="i">GetResponse</span>();
+</code></pre></td>
+</tr>
+</table>
+</section>
+<section >
+<h3>Jepsen</h3>
+<p><a href="https://aphyr.com/tags/jepsen">https://aphyr.com/tags/jepsen</a></p>
+<aside class="notes">
+Kyle Kingsbury<br/>
+</aside>
+</section>
+</section>
+<section >
+<section >
+<h3>How to start</h3>
+<aside class="notes">
+Remote desktop / SSH into a machine and stop a service<br/>
+Public cloud APIs -> Write a script<br/>
+Monitoring to capture metrics<br/>
+</aside>
+</section>
+<section >
+<h3>Predictable outcomes</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="i">yourApplication</span> <span class="i">request</span> <span class="o">=</span>
+    <span class="i">Process</span> <span class="i">request</span>
+    <span class="o">|&gt;</span> <span class="i">response</span>
+</code></pre></td>
+</tr>
+</table>
+<aside class="notes">
+Your system as a pure function<br/>
+data lineage -> directly connect system outcomes to the data and messages that led to them<br/>
+Functional language easier to reason about code, same with modules<br/>
+Why microservices is good, why stateless is good<br/>
+</aside>
+</section>
+<section >
+<h3>Selective test cases</h3>
+<aside class="notes">
+"Why did a good thing happend"<br/>
+Bottom up over top down<br/>
+Not even a formal system can test all cases?<br/>
+Mindset<br/>
+</aside>
+</section>
+</section>
+<section >
+<h1>Let the Lord of Chaos Rule</h1>
+<h2>Thank you!</h2>
+<p>twitter: @nikolaiii</p>
+</section>
+
+
+        </div>
+    </div>
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+    <script>
+        // Add the nohighlight class and data-noescape attribute to code elements that have already been formatted by FSharp.Formatting
+        $('pre.highlighted code').addClass('nohighlight').attr('data-noescape', '');
+
+        // Full list of configuration options available here:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+
+            transition: 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+            // Parallax scrolling
+            // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+            // parallaxBackgroundSize: '2100px 900px',
+
+            // Optional libraries used to extend on reveal.js
+            dependencies: [
+                { src: 'lib/js/classList.js', condition: function () { return !document.body.classList; } },
+                { src: 'plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: 'plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } },
+                { src: 'plugin/zoom-js/zoom.js', async: true, condition: function () { return !!document.body.classList; } },
+                { src: 'plugin/notes/notes.js', async: true, condition: function () { return !!document.body.classList; } }
+            ]
+        });
+
+    </script>
+</body>
+</html>
+
