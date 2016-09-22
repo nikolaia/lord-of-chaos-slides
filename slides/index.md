@@ -14,7 +14,6 @@
 
 ' * High everyone
 ' * My name is Nikolai Norman Andersen, .NET competency lead at BEKK
-' * NDC was months ago?
 ' * Polyglot programming and common tools and services are now de facto standard.
 ' * powerfull tool for every developer in a DevOps culture
 ' * Wheel of Time reference
@@ -25,7 +24,7 @@
 
 ' * Recommended because they solve a lot of of problems regarding scalability and availability
 ' * Moving away from the old monolitich ways of doing things, new non-functional demands our customers give us
-' * Solves a problem, but introduces more? 
+' * Solves a problem, but introduces more?
 
 ---
 
@@ -168,20 +167,22 @@ http://principlesofchaos.org/
 
 ### Lineage-driven Fault Injection
 
-[https://people.eecs.berkeley.edu/~palvaro/molly.pdf](https://people.eecs.berkeley.edu/~palvaro/molly.pdf)
+[Lineage-driven Fault Injection Paper](https://people.eecs.berkeley.edu/~palvaro/molly.pdf)
+
+[QCon 2016: Monkeys in Lab Coats: Applying Failure Testing Research @Netflix](https://www.infoq.com/presentations/failure-test-research-netflix)
 <br/>
 <br/>
 <small>
-Alvaro, Peter, Joshua Rosen, and Joseph M. Hellerstein. "Lineage-driven fault injection." Proceedings of the 2015 ACM SIGMOD International Conference on Management of Data. ACM, 2015.
+
 </small>
-' Paper - Molly - QCon together with Amazon
-' data lineage -> directly connect system outcomes to the data and messages that led to them
-' "Why did a good thing happend" - "What could have gone wrong along the way?"
-' Works it way backwards and finds proofs to why it happens, tries to disprove
-' The Rules: "the adversary agrees to crash no more than one node, and to drop messages only up until some fixed time"
-' A lineagedriven fault injector reasons backwards from correct system outcomes to determine whether failures in the execution could have prevented the outcome.
-' Formal methods
-' Random shots in the dark fault injection
+' * Paper - Molly - QCon together with Amazon
+' * data lineage -> directly connect system outcomes to the data and messages that led to them
+' * "Why did a good thing happend" - "What could have gone wrong along the way?"
+' * Works it way backwards and finds proofs to why it happens, tries to disprove
+' * The Rules: "the adversary agrees to crash no more than one node, and to drop messages only up until some fixed time"
+' * A lineagedriven fault injector reasons backwards from correct system outcomes to determine whether failures in the execution could have prevented the outcome.
+' * Formal methods
+' * Random shots in the dark fault injection
 
 ***
 
@@ -249,6 +250,7 @@ let yourApplication request =
 ```
 
 ' Your system as a pure function
+' data lineage -> directly connect system outcomes to the data and messages that led to them
 ' Functional language easier to reason about code, same with modules
 ' Why microservices is good, why stateless is good
 
@@ -266,4 +268,4 @@ let yourApplication request =
 # Let the Lord of Chaos Rule
 ## Thank you!
 
-@nikolaiii
+twitter: @nikolaiii
