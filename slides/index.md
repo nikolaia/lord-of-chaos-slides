@@ -88,10 +88,28 @@ Application
 https://aphyr.com/posts/293-call-me-maybe-kafka
 <br/>
 https://people.eecs.berkeley.edu/~palvaro/molly.pdf
+<br/>
+http://blog.empathybox.com/post/62279088548/a-few-notes-on-kafka-and-jepsen
 </small>
 
-' Both Zookeeper and primary/backup replication are individually correct software components
-' Message loss failure followed by node failure
+' * Partition
+' * It claimed tolerance to F-1 failures, but a single node could cause catastrophe
+' * Both Zookeeper and primary/backup replication are individually correct software components
+' * writes are not replicated prior to acknowledgement
+' * Message loss failure followed by node failure
+' * candidate design
+
+---
+
+### CAP Theorem
+
+- Consistency
+- Availability
+- Partition Tolerance
+
+' * Consistency - A read is guaranteed to return the most recent write for a given client.
+' * Availability - A non-failing node will return a reasonable response within a reasonable amount of time (no error or timeout).
+' * Partition Tolerance - The system will continue to function when network partitions occur.
 
 ---
 
@@ -266,6 +284,8 @@ let yourApplication request =
 ***
 
 # Let the Lord of Chaos Rule
-## Thank you!
+## Questions?
 
-twitter: @nikolaiii
+
+<br/>twitter: [@nikolaiii](https://twitter.com/nikolaiii)
+<br/>slides: https://nikolaia.github.io/lord-of-chaos-slides/
